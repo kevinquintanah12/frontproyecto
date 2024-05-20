@@ -20,6 +20,12 @@ const ExperienceSelector = () => {
         <div className="experience-selector">
             <h2>Selecciona tus Experiencias:</h2>
             <div className="experience-bubbles">
+            <div
+                    className={`experience-bubble ${selectedExperience.includes('ninguna-experiencia') ? 'selected' : ''}`}
+                    onClick={() => toggleExperience('ninguna-experiencia')}
+                >
+                    Ninguna Experiencia
+                </div>
                 <div
                     className={`experience-bubble ${selectedExperience.includes('dolor') ? 'selected' : ''}`}
                     onClick={() => toggleExperience('dolor')}
@@ -37,12 +43,6 @@ const ExperienceSelector = () => {
                     onClick={() => toggleExperience('escurrimiento-nasal')}
                 >
                     Escurrimiento Nasal
-                </div>
-                <div
-                    className={`experience-bubble ${selectedExperience.includes('ninguna-experiencia') ? 'selected' : ''}`}
-                    onClick={() => toggleExperience('ninguna-experiencia')}
-                >
-                    Ninguna Experiencia
                 </div>
             </div>
             

@@ -3,6 +3,7 @@ import './Menu.css';
 
 const Menu = () => {
     return (
+        
         <div className="menu-container">
             <div className="menu-item">
                 <a href="#">Inicio</a>
@@ -11,10 +12,7 @@ const Menu = () => {
                 <a href="#">Nosotros</a>
             </div>
             <div className="menu-item">
-                <a href="#">Clinicas</a>
-            </div>
-            <div className="menu-item">
-                <a href="#">Usuario</a>
+            <a href="#">Contacto</a>
             </div>
             {/* Más elementos de menú aquí */}
         </div>

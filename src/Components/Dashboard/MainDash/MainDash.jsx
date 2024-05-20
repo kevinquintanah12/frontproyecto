@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import Menu from '../Menu/Menu.jsx';
-import SymptomSelector from '../SymptomSelector/SymptomSelector.jsx'; // Importa el componente SymptomSelector
-import ExperienceSelector from '../ExperienceSelector/ExperienceSelector.jsx'; // Importa el componente SymptomSelector
 
 import './MainDash.css';
+import MultipleSelectionList from '../Selector/MultipleSelectionList';
+
 
 const MainDash = () => {
     useEffect(() => {
@@ -16,10 +16,8 @@ const MainDash = () => {
     return (
         <div className="dashboard-container">
             <Menu />
-            <div className="content">
-            <SymptomSelector />
-            <ExperienceSelector />
-
+            <div className="content" >
+                <MultipleSelectionList/>
                 {/* Contenido del dashboard aquí */}
             </div>
         </div>

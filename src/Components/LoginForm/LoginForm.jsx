@@ -12,7 +12,7 @@ const LoginForm = () => {
     const [resetPasswordMessage, setResetPasswordMessage] = useState('');
     const { login } = useAuth();
     const navigate = useNavigate(); // Obtiene la función de navegación
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -33,7 +33,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div className='wrapper'>
+        <div className='LoginWapper'>
             {resetPassword ? (
                 <div>
                     <h2>Restablecer contraseña</h2>
