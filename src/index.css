@@ -11,14 +11,13 @@ body {
   font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
- display: flex;
- justify-content: center;
- align-items: center;
- min-height: 100vh;
- background: url('./Components/Assets/images.jpg')
- no-repeat;
-background-size: cover;
-background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Altura mínima igual a la altura de la ventana */
+  background: url('./Components/Assets/images.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 code {
@@ -31,3 +30,12 @@ body.dashboard-bg {
   background-position: center;
 }
 
+body.evaluation-bg {
+  background: url('./Components/Assets/resultado.png') no-repeat top center; /* Cambia 'center center' a 'top center' */
+  background-size: contain; /* Cambia de 'cover' a 'contain' */
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Asegúrate de que no haya scrollbars */
+}

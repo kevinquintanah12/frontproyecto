@@ -1,17 +1,25 @@
-// services/useAuth.js
 import { useState } from 'react';
 import AuthService from '../services/AuthService';
 
 const useAuth = () => {
     const [resetPasswordMessage, setResetPasswordMessage] = useState('');
+    const [token, setToken] = useState(null); // Añade un estado para almacenar el token
 
-    const login = async (email, contraseña) => {
+    const login = async (email, password) => {
         try {
-            await AuthService.login(email, contraseña);
+            const response = await AuthService.login(email, password);
+            console.log('Inicio de sesión exitoso:', response);
+            localStorage.setItem('auth-token', response.token); // Guardar el token en localStorage
+            return response;
         } catch (error) {
             console.error('Error al iniciar sesión:', error);
+            throw error;
         }
     };
+    
+    
+    
+    
 
     const register = async (nombre, genero, email, contraseña, edad) => {
         try {
@@ -33,6 +41,7 @@ const useAuth = () => {
 
     return {
         resetPasswordMessage,
+        token, // Retorna el token
         login,
         register,
         handleResetPassword

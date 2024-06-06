@@ -16,7 +16,10 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await login(email, password);
+            const { token } = await login(email, password);
+            console.log('Token recibido:', token);
+            localStorage.setItem('auth-token', token);
+            console.log('Token guardado en localStorage:', token);
             navigate('/dashboard'); // Redirige a MainDash después del login exitoso
         } catch (error) {
             console.error('Error al enviar la solicitud:', error);
@@ -31,6 +34,7 @@ const LoginForm = () => {
             setResetPasswordMessage('Error al enviar la solicitud. Por favor, inténtalo de nuevo.');
         }
     };
+    
 
     return (
         <div className='LoginWapper'>

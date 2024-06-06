@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import Menu from '../Menu/Menu.jsx';
-
 import './MainDash.css';
 import MultipleSelectionList from '../Selector/MultipleSelectionList';
-
-
+import Search from '../Search/Search.jsx';
+import Profile from '../UserProfile/Profile.jsx'
+import Nosotros from '../Nosotros/Nosotros.jsx'
+import Contacto from '../Contacto/Contacto.jsx'
+ 
 const MainDash = () => {
     useEffect(() => {
         document.body.classList.add('dashboard-bg');
@@ -16,9 +18,15 @@ const MainDash = () => {
     return (
         <div className="dashboard-container">
             <Menu />
-            <div className="content" >
-                <MultipleSelectionList/>
-                {/* Contenido del dashboard aquí */}
+            <Search />
+            <Profile />
+            <div className="content">
+                <MultipleSelectionList />
+                   {/* Sección Nosotros */}
+                    < Nosotros />
+      
+                   {/* Sección Contacto */}
+                    <Contacto />
             </div>
         </div>
     );
