@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SintomasPacService from '../../../services/SintomasPacService';
+import diseaseService from '../../../services/diseaseService'; // Importa diseaseService
 import api from '../../../services/api'; // Importa tu instancia de axios con el token
 import './MultipleSelectionList.css';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
@@ -31,7 +31,7 @@ const MultipleSelectionList = () => {
     { "id": 24, "clave": "Manchas_en_garganta" },
     { "id": 25, "clave": "Nivel_anormal_de_azucar" },
     { "id": 26, "clave": "Tos" },
-    { "id": 27, "clave": "iebre_alta" },
+    { "id": 27, "clave": "Fiebre_alta" },
     { "id": 28, "clave": "Ojos_hundidos" },
     { "id": 29, "clave": "Falta_de_aire" },
     { "id": 30, "clave": "Sudoracion" },
@@ -140,9 +140,13 @@ const MultipleSelectionList = () => {
     { "id": 133, "clave": "Pus_amarillenta" }
   ];
 
+  const [jsonInput, setJsonInput] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [idUsuario, setIdUsuario] = useState(null);
+  const [apiError, setApiError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [prediction, setPrediction] = useState(null);
   const [error, setError] = useState(null);
   const token = localStorage.getItem('auth-token'); // Obtener el token del localStorage
   const navigate = useNavigate(); // Obtén el navigate
@@ -170,13 +174,18 @@ const MultipleSelectionList = () => {
 
   const handleSelectOption = (e) => {
     const value = parseInt(e.target.value, 10);
-    if (!selectedOptions.includes(value)) {
+
+    if (!selectedOptions.includes(value) && selectedOptions.length < 6) {
       setSelectedOptions([...selectedOptions, value]);
+      setErrorMessage('');
+    } else {
+      setErrorMessage('No puedes seleccionar más de 6 síntomas');
     }
   };
 
   const handleRemoveOption = (option) => {
     setSelectedOptions(selectedOptions.filter((item) => item !== option));
+    setErrorMessage('');
   };
 
   const handleSearchChange = (e) => {
@@ -191,32 +200,43 @@ const MultipleSelectionList = () => {
     event.preventDefault();
 
     try {
-        if (!idUsuario) {
-            setError('ID de usuario no encontrado');
-            return;
-        }
-
+      if (!idUsuario) {
+        setErrorMessage('ID de usuario no encontrado');
+        return;
+      }
         // Crear un array binario con 1 para los síntomas seleccionados y 0 para los no seleccionados
-        const binaryArray = options.map((option) => ({
-          clave: option.clave,
-          seleccionado: selectedOptions.includes(option.id) ? 1 : 0
-      }));
+        const requestBody = {};
+        options.forEach((symptom) => {
+          requestBody[symptom.clave] = selectedOptions.includes(symptom.id) ? 1 : 0;
+        
+        });
+    
+        console.log(requestBody);
+    
+        const response = await fetch('http://127.0.0.1:8000/predict', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+    
+        const data = await response.json();
+        console.log('Success:', data);
+        const enfermedad = await diseaseService.getEnfermedadByNombreOriginal(data.prediction);
 
-        console.log('Array binario:', binaryArray);
-
-      const data = await SintomasPacService.saveSintomas(idUsuario, selectedOptions, token); // Pasar el token como argumento
-        console.log('Síntomas guardados:', data);
-        navigate('/evaluation');
-
-    } catch (error) {
-        setError('Error al guardar síntomas');
-        console.error('Error al guardar síntomas:', error);
-    }
-  };
+        // Mostrar la información en el componente ShowEvaluation
+        setPrediction(enfermedad.nombreEspañol);
+        setJsonInput(JSON.stringify(enfermedad, null, 2));
+      } catch (error) {
+        console.error('Error:', error);
+        setError('Error al realizar la predicción');
+      }
+    }; //
 
   return (
     <div className="MultipleSelectionList">
-      {error && <p>Error: {error}</p>}
+      {errorMessage && <div className="error-message iphone-error">{errorMessage}</div>}
       <div className="search-input">
         <input
           type="text"
@@ -243,7 +263,7 @@ const MultipleSelectionList = () => {
         </ul>
       </div>
       <div className="confirmar">
-        <button className="guardar" onClick={handleSubmit}>Guardar Síntomas</button>
+        <button className="guardar" onClick={handleSubmit} disabled={selectedOptions.length === 0}>Guardar Síntomas</button>
       </div>
     </div>
   );

@@ -8,7 +8,6 @@ import Error404 from './Errors/Error404'; // Importa el componente Error404
 import './App.css'; // Asegúrate de importar tus estilos CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 function App() {
   return (
     <Router>

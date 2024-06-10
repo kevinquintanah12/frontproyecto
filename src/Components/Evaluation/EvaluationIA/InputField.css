@@ -1,15 +1,14 @@
-/* InputField.css */
 .input__container {
-    max-width: 1000px; /* Aumentar el ancho */
+    position: absolute; /* Fijo en la pantalla */
+    bottom: -30px; /* En la parte inferior */
+    top: 85%; /* Fijo desde la parte superior, con 'px' */
+
+    max-width: 900px; /* Aumentar el ancho */
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Aumentar el espacio entre elementos */
     background: rgba(255, 255, 255, 0.5);
     padding: 20px; /* Aumentar el padding */
     border-radius: 20px;
-    position: fixed; /* Fijo en la pantalla */
-    bottom: -40px; /* En la parte inferior */
-    top: 120;
     overflow-y: auto; /* Asegura el scroll vertical */
     left: 50%; /* Centrado horizontalmente */
     transform: translateX(-50%); /* Centrado horizontalmente */
@@ -29,7 +28,7 @@
     border-radius: 20px;
     background-color: #99d1ff; /* Color azul claro */
     background-image: radial-gradient(at 47% 69%, hsla(222,62%,75%,1) 0px, transparent 50%),
-    radial-gradient(at 9% 32%, rgb(76, 207, 230) 0px, transparent 50%);
+                      radial-gradient(at 9% 32%, rgb(76, 207, 230) 0px, transparent 50%);
 }
 
 .input__label {
